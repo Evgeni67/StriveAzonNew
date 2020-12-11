@@ -20,6 +20,7 @@ class Products extends React.Component {
     isSecondOpen: false,
     currentId: "",
     comments: [],
+    rate: 1,
   };
   openModal = (e) => {
     this.setState({
@@ -50,7 +51,7 @@ class Products extends React.Component {
       if (response.ok) {
         console.log(response);
       } else {
-        alert("not added");
+        alert("wtf");
       }
 
       console.log("Response: " + response);
@@ -60,8 +61,31 @@ class Products extends React.Component {
     }
   };
 
+  deleteProduct = async (e) => {
+    let id = e.currentTarget.parentElement.children[0].innerText;
+    try {
+      let response = await fetch(`http://localhost:3002/projects/${id}`, {
+        method: "DELETE",
+      });
+      response = await response.json();
+      if (response.ok) {
+        console.log(response);
+      } else {
+        alert("The respose is not ok but still added tho");
+      }
+
+      console.log("Response: " + response);
+      return response;
+    } catch (e) {
+      console.log("ERROR fetching HERE " + e);
+    }
+  };
   changeStateComment = async (event) => {
     this.setState({ comment: event.target.value });
+    console.log(this.state);
+  };
+  changeStateRate = async (event) => {
+    this.setState({ rate: event.taget.value });
     console.log(this.state);
   };
   getTheReviews = async (e) => {
@@ -112,12 +136,30 @@ class Products extends React.Component {
       console.log("ERROR fetching HERE " + e);
     }
   };
+  componentDidUpdate = async (prevState) => {
+    if (prevState !== this.state) {
+      try {
+        let response = await fetch(`http://localhost:3002/projects`, {
+          method: "GET",
+        });
+        response = await response.json();
+
+        console.log(response);
+        this.setState({ currentProjects: response });
+        return response;
+
+        //console.log("user", response)
+      } catch (e) {
+        console.log("ERROR fetching HERE " + e);
+      }
+    }
+  };
   render() {
     return (
       <>
         <Modal show={this.state.isSecondOpen}>
-          <Modal.Header closeButton>
-            <Modal.Title>Reviews:</Modal.Title>
+          <Modal.Header>
+            <Modal.Title>Reviews</Modal.Title>
           </Modal.Header>
           <Modal.Body>
             {this.state.comments.map((comment) => (
@@ -131,15 +173,11 @@ class Products extends React.Component {
           </Modal.Footer>
         </Modal>
         <Modal show={this.state.isOpen}>
-          <Modal.Header closeButton>
+          <Modal.Header>
             <Modal.Title>Add A Review</Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <Form>
-              <Form.Group controlId="exampleForm.ControlInput1">
-                <Form.Label>Element Id</Form.Label>
-                <Form.Control type="text" placeholder="id" />
-              </Form.Group>
               <Form.Group controlId="exampleForm.ControlSelect1">
                 <Form.Label>Rate:</Form.Label>
                 <Form.Control as="select">
@@ -176,17 +214,18 @@ class Products extends React.Component {
               <Card.Img variant="top" src={project.image} />
               <Card.Body>
                 <div className="d-none">{project.id}</div>
-                <Card.Title>{project.name} /</Card.Title>
+                <Card.Title>{project.name}</Card.Title>
                 <Card.Text>{project.description}</Card.Text>
-                <Button variant="primary">Buy {project.price}</Button>
+                <Card.Text>Brand / {project.brand}</Card.Text>
+                <Button variant="success">Buy Now {project.price}</Button>
                 <Button variant="primary" onClick={(e) => this.openModal(e)}>
                   Add a review
                 </Button>
-                <Button
-                  variant="primary"
-                  onClick={(e) => this.getTheReviews(e)}
-                >
+                <Button variant="info" onClick={(e) => this.getTheReviews(e)}>
                   See Reviews
+                </Button>
+                <Button variant="danger" onClick={(e) => this.deleteProduct(e)}>
+                  Delete Product{" "}
                 </Button>
               </Card.Body>
             </Card>

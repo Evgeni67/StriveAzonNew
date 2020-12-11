@@ -81,52 +81,54 @@ class Body extends React.Component {
   render() {
     return (
       <>
-        <div className="mainDiv">
-          <Form>
-            <Form.Group controlId="exampleForm.ControlInput1">
-              <Form.Label>Name</Form.Label>
-              <Form.Control
-                type="name"
-                onChange={(event) => this.changeStateName(event)}
-                placeholder="Name"
-              />
-            </Form.Group>
-            <Form.Group controlId="exampleForm.ControlInput1">
-              <Form.Label>Description</Form.Label>
-              <Form.Control
-                type="email"
-                onChange={(event) => this.changeStateDescription(event)}
-                placeholder="Description"
-              />
-            </Form.Group>
-            <Form.Group controlId="exampleForm.ControlInput1">
-              <Form.Label>Brand</Form.Label>
-              <Form.Control
-                type="text"
-                onChange={(event) => this.changeStateBrand(event)}
-                placeholder="No nokias please"
-              />
-            </Form.Group>
-            <Form.Group controlId="exampleForm.ControlInput1">
-              <Form.Label>Price</Form.Label>
-              <Form.Control
-                type="text"
-                onChange={(event) => this.changeStatePrice(event)}
-                placeholder="$$$"
-              />
-            </Form.Group>
-            <Form.Group controlId="exampleForm.ControlInput1">
-              <Form.Label>Image</Form.Label>
-              <Form.Control
-                type="text"
-                onChange={(event) => this.changeStateImage(event)}
-                placeholder="URL"
-              />
-            </Form.Group>
+        <Container>
+          <div className="mainDiv mt-5">
+            <Form>
+              <Form.Group controlId="exampleForm.ControlInput1">
+                <Form.Label>Name</Form.Label>
+                <Form.Control
+                  type="name"
+                  onChange={(event) => this.changeStateName(event)}
+                  placeholder="Name"
+                />
+              </Form.Group>
+              <Form.Group controlId="exampleForm.ControlInput1">
+                <Form.Label>Description</Form.Label>
+                <Form.Control
+                  type="email"
+                  onChange={(event) => this.changeStateDescription(event)}
+                  placeholder="Description"
+                />
+              </Form.Group>
+              <Form.Group controlId="exampleForm.ControlInput1">
+                <Form.Label>Brand</Form.Label>
+                <Form.Control
+                  type="text"
+                  onChange={(event) => this.changeStateBrand(event)}
+                  placeholder="No nokias please"
+                />
+              </Form.Group>
+              <Form.Group controlId="exampleForm.ControlInput1">
+                <Form.Label>Price</Form.Label>
+                <Form.Control
+                  type="text"
+                  onChange={(event) => this.changeStatePrice(event)}
+                  placeholder="$$$"
+                />
+              </Form.Group>
+              <Form.Group controlId="exampleForm.ControlInput1">
+                <Form.Label>Image</Form.Label>
+                <Form.Control
+                  type="text"
+                  onChange={(event) => this.changeStateImage(event)}
+                  placeholder="URL"
+                />
+              </Form.Group>
 
-            <Button onClick={() => this.addProject()}> Add Project </Button>
-          </Form>
-        </div>
+              <Button onClick={() => this.addProject()}> Add Project </Button>
+            </Form>
+          </div>
+        </Container>
       </>
     );
   }

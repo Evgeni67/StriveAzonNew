@@ -55,6 +55,7 @@ const fs = require("fs");
 const path = require("path");
 const uniqid = require("uniqid");
 const projectsFilePath = path.join(__dirname, "projects.json");
+const reviewsFilePath = path.join(__dirname, "reviews.json");
 const router = express.Router();
 
 const readFile = (fileName) => {
@@ -70,11 +71,15 @@ router.get("/", (req, res) => {
 
 router.get("/:identifier", (req, res) => {
   const projectsAsArray = readFile("projects.json");
+  const reviewsAsArray = readFile("reviews.json");
   const idFromParams = req.params.identifier;
   const projectt = projectsAsArray.filter(
     (project) => project.id === idFromParams
   );
-  res.send(projectt);
+  const reviews = reviewsAsArray.filter(
+    (project) => project._id === idFromParams
+  );
+  res.send({ projectt, reviews });
 });
 
 router.post("/", (req, res) => {
@@ -87,7 +92,15 @@ router.post("/", (req, res) => {
   fs.writeFileSync(projectsFilePath, JSON.stringify(projectsAsArray));
   res.status(201).send(newProject);
 });
+router.post("/reviews", (req, res) => {
+  const projectsAsArray = readFile("reviews.json");
 
+  //get the new project from the request's body
+  const newProject = req.body;
+  projectsAsArray.push(newProject);
+  fs.writeFileSync(reviewsFilePath, JSON.stringify(projectsAsArray));
+  res.status(201).send(newProject);
+});
 router.put("/:id", (req, res) => {
   const projectsAsArray = readFile("projects.json");
   //find the index

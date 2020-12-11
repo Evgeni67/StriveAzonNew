@@ -2,7 +2,6 @@ const express = require("express");
 const cors = require("cors");
 const { join } = require("path");
 const projectsRoutes = require("./services/projects");
-
 const server = express();
 const port = process.env.PORT || 3002;
 //we are sharing public folder publicly to access

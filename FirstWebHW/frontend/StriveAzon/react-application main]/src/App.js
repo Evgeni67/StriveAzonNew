@@ -3,11 +3,12 @@ import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Body from "./components/body";
 import Products from "./components/products";
+import Navbar from "./components/NavBar";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import {
   Row,
   Col,
   Form,
-  Navbar,
   Nav,
   FormControl,
   Image,
@@ -20,23 +21,13 @@ import {
 function App() {
   return (
     <>
-      <Row>
-        <Col sm={4}> </Col>
-        <Col sm={4}>
-          {" "}
-          <Body />{" "}
-        </Col>
-        <Col sm={4}> </Col>
-      </Row>
-      <Row>
-        <Col sm={1}> </Col>
-        <Col sm={10}>
-          <Row>
-            <Products />
-          </Row>
-        </Col>
-        <Col sm={1}> </Col>
-      </Row>
+      <>
+        <Router>
+          <Navbar />
+          <Route path="/" exact component={Products} />
+          <Route path="/products" component={Body} />
+        </Router>
+      </>
     </>
   );
 }

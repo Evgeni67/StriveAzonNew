@@ -11,6 +11,8 @@ import {
   Button,
   Card,
   Modal,
+  Row,
+  Col,
 } from "react-bootstrap";
 import "../css/Evgeni.css";
 class Products extends React.Component {
@@ -208,28 +210,45 @@ class Products extends React.Component {
             </Button>
           </Modal.Footer>
         </Modal>
-        {this.state.currentProjects.length !== 0 &&
-          this.state.currentProjects.map((project) => (
-            <Card style={{ width: "18rem" }} value={project.id}>
-              <Card.Img variant="top" src={project.image} />
-              <Card.Body>
-                <div className="d-none">{project.id}</div>
-                <Card.Title>{project.name}</Card.Title>
-                <Card.Text>{project.description}</Card.Text>
-                <Card.Text>Brand / {project.brand}</Card.Text>
-                <Button variant="success">Buy Now {project.price}</Button>
-                <Button variant="primary" onClick={(e) => this.openModal(e)}>
-                  Add a review
-                </Button>
-                <Button variant="info" onClick={(e) => this.getTheReviews(e)}>
-                  See Reviews
-                </Button>
-                <Button variant="danger" onClick={(e) => this.deleteProduct(e)}>
-                  Delete Product{" "}
-                </Button>
-              </Card.Body>
-            </Card>
-          ))}
+        <Row>
+          {this.state.currentProjects.length !== 0 &&
+            this.state.currentProjects.map((project) => (
+              <Col sm={2} className="mt-5">
+                <Card style={{ width: "18rem" }} value={project.id}>
+                  <Card.Img
+                    variant="top"
+                    src={project.image}
+                    style={{ height: "300px" }}
+                  />
+                  <Card.Body>
+                    <div className="d-none">{project.id}</div>
+                    <Card.Title>{project.name}</Card.Title>
+                    <Card.Text>{project.description}</Card.Text>
+                    <Card.Text>Brand / {project.brand}</Card.Text>
+                    <Button variant="success">Buy Now {project.price}</Button>
+                    <Button
+                      variant="primary"
+                      onClick={(e) => this.openModal(e)}
+                    >
+                      Add a review
+                    </Button>
+                    <Button
+                      variant="info"
+                      onClick={(e) => this.getTheReviews(e)}
+                    >
+                      See Reviews
+                    </Button>
+                    <Button
+                      variant="danger"
+                      onClick={(e) => this.deleteProduct(e)}
+                    >
+                      Delete Product{" "}
+                    </Button>
+                  </Card.Body>
+                </Card>
+              </Col>
+            ))}
+        </Row>
       </>
     );
   }

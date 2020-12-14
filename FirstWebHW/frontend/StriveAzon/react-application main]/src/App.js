@@ -3,11 +3,11 @@ import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Body from "./components/body";
 import Products from "./components/products";
+import Navbar from "./components/navbar";
 import {
   Row,
   Col,
   Form,
-  Navbar,
   Nav,
   FormControl,
   Image,
@@ -20,22 +20,14 @@ import {
 function App() {
   return (
     <>
+      <Navbar />
       <Row>
-        <Col sm={4}> </Col>
-        <Col sm={4}>
+        <Col sm={3}> </Col>
+        <Col sm={6}>
           {" "}
           <Body />{" "}
         </Col>
-        <Col sm={4}> </Col>
-      </Row>
-      <Row>
-        <Col sm={1}> </Col>
-        <Col sm={10}>
-          <Row>
-            <Products />
-          </Row>
-        </Col>
-        <Col sm={1}> </Col>
+        <Col sm={3}> </Col>
       </Row>
     </>
   );

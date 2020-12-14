@@ -35,6 +35,39 @@ class Products extends React.Component {
     });
   };
   closeSecondModal = () => this.setState({ isSecondOpen: false });
+  addToCard = async (e) => {
+    console.log(
+      "event -> " + e.currentTarget.parentElement.children[0].innerText
+    );
+    const project = {
+      _id: e.currentTarget.parentElement.children[0].innerText,
+    };
+
+    console.log("actually in");
+    try {
+      let response = await fetch(
+        `http://localhost:3002/projects/cards/myCard`,
+        {
+          method: "POST",
+          body: JSON.stringify(project),
+          headers: new Headers({
+            "Content-Type": "application/json",
+          }),
+        }
+      );
+      response = await response.json();
+      if (response.ok) {
+        console.log(response);
+      } else {
+        alert("wtf");
+      }
+      this.mountTheObjects();
+      console.log("Response: " + response);
+      return response;
+    } catch (e) {
+      console.log("ERROR fetching HERE " + e);
+    }
+  };
   addReview = async () => {
     const project = { _id: this.state.currentId, comment: this.state.comment };
 
@@ -53,7 +86,7 @@ class Products extends React.Component {
       } else {
         alert("wtf");
       }
-
+      this.mountTheObjects();
       console.log("Response: " + response);
       return response;
     } catch (e) {
@@ -73,7 +106,7 @@ class Products extends React.Component {
       } else {
         alert("The respose is not ok but still added tho");
       }
-
+      this.mountTheObjects();
       console.log("Response: " + response);
       return response;
     } catch (e) {
@@ -120,7 +153,7 @@ class Products extends React.Component {
       console.log("ERROR fetching HERE " + e);
     }
   };
-  componentDidMount = async (prevState) => {
+  mountTheObjects = async () => {
     try {
       let response = await fetch(`http://localhost:3002/projects`, {
         method: "GET",
@@ -136,15 +169,18 @@ class Products extends React.Component {
       console.log("ERROR fetching HERE " + e);
     }
   };
-  componentDidUpdate = async (prevState) => {
-    if (prevState !== this.state) {
+  componentDidMount = async (prevState) => {
+    this.mountTheObjects();
+  };
+  componentDidUpdate = async (prevProps, prevState) => {
+    console.log(prevState, this.state);
+    if (JSON.stringify(prevState) !== JSON.stringify(this.state)) {
       try {
         let response = await fetch(`http://localhost:3002/projects`, {
           method: "GET",
         });
         response = await response.json();
 
-        console.log(response);
         this.setState({ currentProjects: response });
         return response;
 
@@ -217,11 +253,16 @@ class Products extends React.Component {
                 <Card.Title>{project.name}</Card.Title>
                 <Card.Text>{project.description}</Card.Text>
                 <Card.Text>Brand / {project.brand}</Card.Text>
-                <Button variant="success">Buy Now {project.price}</Button>
+                <Button variant="success" onClick={(e) => this.addToCard(e)}>
+                  Buy Now {project.price}
+                </Button>
                 <Button variant="primary" onClick={(e) => this.openModal(e)}>
                   Add a review
                 </Button>
-                <Button variant="info" onClick={(e) => this.getTheReviews(e)}>
+                <Button
+                  variant="secondary"
+                  onClick={(e) => this.getTheReviews(e)}
+                >
                   See Reviews
                 </Button>
                 <Button variant="danger" onClick={(e) => this.deleteProduct(e)}>

@@ -56,6 +56,7 @@ const path = require("path");
 const uniqid = require("uniqid");
 const projectsFilePath = path.join(__dirname, "projects.json");
 const reviewsFilePath = path.join(__dirname, "reviews.json");
+const myCardFilePath = path.join(__dirname, "myCard.json");
 const router = express.Router();
 
 const readFile = (fileName) => {
@@ -92,6 +93,7 @@ router.post("/", (req, res) => {
   fs.writeFileSync(projectsFilePath, JSON.stringify(projectsAsArray));
   res.status(201).send(newProject);
 });
+
 router.post("/reviews", (req, res) => {
   const projectsAsArray = readFile("reviews.json");
 
@@ -122,4 +124,19 @@ router.delete("/:id", (req, res) => {
   res.send(newprojectsArray);
 });
 
+//MY CARD
+
+router.post("/cards/myCard", (req, res) => {
+  const projectsAsArray = readFile("myCard.json");
+
+  //get the new project from the request's body
+  const newProject = req.body;
+  projectsAsArray.push(newProject);
+  fs.writeFileSync(myCardFilePath, JSON.stringify(projectsAsArray));
+  res.status(201).send(newProject);
+});
+router.get("/cards/myCard", (req, res) => {
+  const myCardAsArray = readFile("myCard.json");
+  res.send(myCardAsArray);
+});
 module.exports = router;

@@ -4,8 +4,8 @@
 }
 .mainDiv {
   display: flex;
-  flex-direction: column;
   justify-content: center;
+  flex-direction: column;
 }
 Button {
   width: 100%;
@@ -15,4 +15,9 @@ Button {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  margin-left: 25px;
+  margin-top: 20px;
+}
+body {
+  background-color: lightgray;
 }

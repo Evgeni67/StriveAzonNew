@@ -9,9 +9,10 @@ import {
   Container,
   ListGroup,
   Button,
+  Row,
 } from "react-bootstrap";
 import "../css/Evgeni.css";
-
+import Products from "../components/products";
 //-projectID - name - text - date;
 /*
 "_id": "5d318e1a8541744830bef139", //SERVER GENERATED
@@ -126,6 +127,9 @@ class Body extends React.Component {
 
             <Button onClick={() => this.addProject()}> Add Project </Button>
           </Form>
+          <Row>
+            <Products />
+          </Row>
         </div>
       </>
     );

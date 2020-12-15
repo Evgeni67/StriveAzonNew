@@ -1,3 +1,9 @@
 .cardProduct {
   margin-left: 15px;
 }
+.accounts {
+  position: relative;
+  display: flex;
+  justify-content: right;
+  text-align: right;
+}

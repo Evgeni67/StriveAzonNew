@@ -21,6 +21,7 @@ class MyNavbar extends React.Component {
     isOpen: false,
     currentItemsInState: [],
     totalPrice: 0,
+    account: "default",
   };
   mountTheItems = async (id) => {
     try {
@@ -44,6 +45,9 @@ class MyNavbar extends React.Component {
       console.log("ERROR fetching HERE " + e);
     }
   };
+  changeCurrentAccount = (id) => {
+    this.setState({ account: `User${id}` });
+  };
   componentDidMount = async () => {
     try {
       let response = await fetch(
@@ -64,14 +68,37 @@ class MyNavbar extends React.Component {
     }
   };
   CloseModal = () => {
-    this.setState({ isOpen: false, currentItemsInState: [] });
+    this.setState({ isOpen: false, currentItemsInState: [], totalPrice: 0 });
   };
   OpenModal = () => {
     this.setState({ isOpen: true });
-    this.state.card.forEach((id) => {
-      this.mountTheItems(id);
-    });
+    this.state.card
+      .filter((x) => x.username === this.props.getTheCurrentUser)
+      .forEach((id) => {
+        this.mountTheItems(id);
+      });
     console.log(this.state.currentItemsInState);
+  };
+  RemoveItem = async (e) => {
+    let id = e.currentTarget.parentElement.children[0].innerText;
+    try {
+      let response = await fetch(
+        `http://localhost:3002/projects/cards/myCard/${id}`,
+        {
+          method: "DELETE",
+        }
+      );
+      response = await response.json();
+      if (response.ok) {
+        console.log(response);
+      } else {
+        alert("The respose is not ok but still added tho");
+      }
+      console.log("Response: " + response);
+      return response;
+    } catch (e) {
+      console.log("ERROR fetching HERE " + e);
+    }
   };
   render() {
     return (
@@ -86,10 +113,46 @@ class MyNavbar extends React.Component {
               <FiShoppingCart />
             </Nav.Link>
           </Nav>
+          <div className="accounts">
+            <Dropdown className="accounts">
+              <Dropdown.Toggle variant="success" id="dropdown-basic">
+                Current Account:{this.props.getTheCurrentUser}
+              </Dropdown.Toggle>
+
+              <Dropdown.Menu>
+                <Dropdown.Item
+                  href="#/action-1"
+                  onClick={(user) => {
+                    this.props.onUserChange("User1");
+                  }}
+                >
+                  User1
+                </Dropdown.Item>
+                <Dropdown.Item
+                  href="#/action-2"
+                  onClick={(user) => {
+                    this.props.onUserChange("User2");
+                  }}
+                >
+                  User2
+                </Dropdown.Item>
+                <Dropdown.Item
+                  href="#/action-3"
+                  onClick={(user) => {
+                    this.props.onUserChange("User3");
+                  }}
+                >
+                  User3
+                </Dropdown.Item>
+              </Dropdown.Menu>
+            </Dropdown>
+          </div>
         </Navbar>
         <Modal show={this.state.isOpen}>
           <Modal.Header>
-            <Modal.Title>Your Card</Modal.Title>
+            <Modal.Title>
+              Your Card Mr. {this.props.getTheCurrentUser}
+            </Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <Row>
@@ -106,7 +169,10 @@ class MyNavbar extends React.Component {
                       <Button variant="success">
                         Price: £{project.projectt[0].price}
                       </Button>
-                      <Button variant="danger">
+                      <Button
+                        variant="danger"
+                        onClick={(e) => this.RemoveItem(e)}
+                      >
                         Remove product from card{" "}
                       </Button>
                     </Card.Body>

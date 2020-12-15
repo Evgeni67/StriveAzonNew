@@ -24,14 +24,22 @@ import Products from "../components/products";
         "category": "smartphones"
         */
 class Body extends React.Component {
-  state = {
-    name: "default",
-    description: "default",
-    dateAdded: "22/02/2001",
-    currentProjects: [],
-    image: "",
-    brand: "",
-    price: "",
+  constructor(props) {
+    super(props);
+    this.state = {
+      user: {},
+      name: "default",
+      description: "default",
+      dateAdded: "22/02/2001",
+      currentProjects: [],
+      image: "",
+      brand: "",
+      price: "",
+    };
+  }
+
+  onUserChange = (user) => {
+    this.setState({ user });
   };
   addProject = async () => {
     const project = this.state;
@@ -124,12 +132,7 @@ class Body extends React.Component {
                 placeholder="URL"
               />
             </Form.Group>
-
-            <Button onClick={() => this.addProject()}> Add Project </Button>
           </Form>
-          <Row>
-            <Products />
-          </Row>
         </div>
       </>
     );

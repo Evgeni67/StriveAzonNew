@@ -36,11 +36,9 @@ class Products extends React.Component {
   };
   closeSecondModal = () => this.setState({ isSecondOpen: false });
   addToCard = async (e) => {
-    console.log(
-      "event -> " + e.currentTarget.parentElement.children[0].innerText
-    );
     const project = {
       _id: e.currentTarget.parentElement.children[0].innerText,
+      username: this.props.getTheCurrentUser,
     };
 
     console.log("actually in");
@@ -193,6 +191,7 @@ class Products extends React.Component {
   render() {
     return (
       <>
+        <Button onClick={() => this.props.getCurrentUser()}></Button>
         <Modal show={this.state.isSecondOpen}>
           <Modal.Header>
             <Modal.Title>Reviews</Modal.Title>

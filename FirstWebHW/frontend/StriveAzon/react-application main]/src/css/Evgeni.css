@@ -15,9 +15,15 @@ Button {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  margin-left: 25px;
+  margin-left: 68px;
   margin-top: 20px;
 }
 body {
   background-color: lightgray;
+}
+.accounts {
+  position: relative;
+  display: flex;
+  justify-content: right;
+  text-align: right;
 }

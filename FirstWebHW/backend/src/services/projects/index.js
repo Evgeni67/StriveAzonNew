@@ -139,4 +139,14 @@ router.get("/cards/myCard", (req, res) => {
   const myCardAsArray = readFile("myCard.json");
   res.send(myCardAsArray);
 });
+
+router.delete("/cards/myCard/:id", (req, res) => {
+  const projectsAsArray = readFile("myCard.json");
+  //filter it out
+  const newprojectsArray = projectsAsArray.filter(
+    (project) => project._id !== req.params.id
+  );
+  fs.writeFileSync(myCardFilePath, JSON.stringify(newprojectsArray));
+  res.send(newprojectsArray);
+});
 module.exports = router;

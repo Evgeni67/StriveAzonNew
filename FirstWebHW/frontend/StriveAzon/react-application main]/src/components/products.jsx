@@ -11,6 +11,7 @@ import {
   Button,
   Card,
   Modal,
+  Row,
 } from "react-bootstrap";
 import "../css/Evgeni.css";
 class Products extends React.Component {
@@ -67,7 +68,12 @@ class Products extends React.Component {
     }
   };
   addReview = async () => {
-    const project = { _id: this.state.currentId, comment: this.state.comment };
+    const project = {
+      _id: this.state.currentId,
+      comment: this.state.comment,
+      username: this.props.getTheCurrentUser,
+      rate: this.state.rate,
+    };
 
     console.log("actually in");
     try {
@@ -197,7 +203,15 @@ class Products extends React.Component {
           </Modal.Header>
           <Modal.Body>
             {this.state.comments.map((comment) => (
-              <p>{comment.comment} </p>
+              <Row className="commentRow">
+                <Image
+                  className="profilePic"
+                  src="https://cdn.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png"
+                />
+                <p>
+                  {comment.username} : {comment.comment} {comment.rate}/5{" "}
+                </p>
+              </Row>
             ))}
           </Modal.Body>
           <Modal.Footer>
@@ -215,11 +229,11 @@ class Products extends React.Component {
               <Form.Group controlId="exampleForm.ControlSelect1">
                 <Form.Label>Rate:</Form.Label>
                 <Form.Control as="select">
-                  <option>1</option>
-                  <option>2</option>
-                  <option>3</option>
-                  <option>4</option>
-                  <option>5</option>
+                  <option onClick={() => this.setState({ rate: 1 })}>1</option>
+                  <option onClick={() => this.setState({ rate: 2 })}>2</option>
+                  <option onClick={() => this.setState({ rate: 3 })}>3</option>
+                  <option onClick={() => this.setState({ rate: 4 })}>4</option>
+                  <option onClick={() => this.setState({ rate: 5 })}>5</option>
                 </Form.Control>
               </Form.Group>
 

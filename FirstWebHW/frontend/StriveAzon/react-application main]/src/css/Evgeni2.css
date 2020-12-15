@@ -7,3 +7,15 @@
   justify-content: right;
   text-align: right;
 }
+.commentRow {
+  margin-top: 10px;
+}
+.someText {
+  margin-right: 10px;
+  margin-top: 6px;
+  font-size: 20px;
+  color: white;
+}
+.accountBtn {
+  margin-top: 6px;
+}

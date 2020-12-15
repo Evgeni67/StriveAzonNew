@@ -114,9 +114,10 @@ class MyNavbar extends React.Component {
             </Nav.Link>
           </Nav>
           <div className="accounts">
-            <Dropdown className="accounts">
+            <p className="someText">Current Account:</p>
+            <Dropdown className="accountBtn">
               <Dropdown.Toggle variant="success" id="dropdown-basic">
-                Current Account:{this.props.getTheCurrentUser}
+                {this.props.getTheCurrentUser}
               </Dropdown.Toggle>
 
               <Dropdown.Menu>

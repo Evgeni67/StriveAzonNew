@@ -27,3 +27,11 @@ body {
   justify-content: right;
   text-align: right;
 }
+.profilePic {
+  border-radius: 50%;
+  width: 30px;
+  margin-bottom: 15px;
+  margin-top: -6px;
+  margin-right: 4px;
+  margin-left: 9px;
+}

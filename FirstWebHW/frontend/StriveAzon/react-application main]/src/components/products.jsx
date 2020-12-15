@@ -191,7 +191,6 @@ class Products extends React.Component {
   render() {
     return (
       <>
-        <Button onClick={() => this.props.getCurrentUser()}></Button>
         <Modal show={this.state.isSecondOpen}>
           <Modal.Header>
             <Modal.Title>Reviews</Modal.Title>

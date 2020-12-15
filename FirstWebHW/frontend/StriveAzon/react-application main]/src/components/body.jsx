@@ -132,6 +132,8 @@ class Body extends React.Component {
                 placeholder="URL"
               />
             </Form.Group>
+
+            <Button onClick={() => this.addProject()}> Add Project </Button>
           </Form>
         </div>
       </>
